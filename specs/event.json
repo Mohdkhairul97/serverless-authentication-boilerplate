@@ -6,6 +6,6 @@
     "stage": "dev"
   },
   "headers": {
-    "Host": "api-id.execute-api.eu-west-1.amazonaws.com"
+    "Host": "api-id.execute-api.us-east-1.amazonaws.com"
   }
 }

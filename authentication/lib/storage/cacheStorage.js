@@ -1,7 +1,5 @@
 'use strict';
 
-require('dotenv').config();
-// const table = `${process.env.SERVERLESS_STAGE}-${process.env.SERVERLESS_PROJECT}-cache`;
 const table = process.env.CACHE_DB_NAME.replace(/{stage}/, process.env.STAGE);
 const config = { region: process.env.SERVERLESS_REGION };
 

@@ -15,10 +15,44 @@ const createResponseData = (id) => {
 };
 
 const redirectProxyCallback = (context, data) => {
-  context.succeed({
-    statusCode: 302,
+  // TODO: Better if utils.tokenResponse returned authorizationToken as a seperate parameter
+  // so we don't have to parse it out of the url.
+  const url = require('url');
+  const query = url.parse(data.url, true).query;
+
+  if (!query.authorization_token) {
+    context.succeed({
+      statusCode: 302,
+      headers: {
+        Location: data.url
+      }
+    });
+    return;
+  }
+
+  // Authorize before returning auth token to ensure client cannot authorize a different user ID.
+  // The user ID becomes part of the API path authorized, ensuring that this user cannot
+  // modify another user's data.
+  const authUrl = process.env.API_AUTH_ENDPOINT
+    .replace(/{stage}/, process.env.STAGE)
+    .replace(/{userId}/, query.id);
+  const request = require('request');
+  const options = {
+    url: authUrl,
     headers: {
-      Location: data.url
+      Authorization: query.authorization_token
+    }
+  };
+  request(options, (error, response) => {
+    if (!error && response.statusCode === 200) {
+      context.succeed({
+        statusCode: 302,
+        headers: {
+          Location: data.url
+        }
+      });
+    } else {
+      console.log(error);
     }
   });
 };

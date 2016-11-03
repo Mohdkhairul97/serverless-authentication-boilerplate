@@ -1,15 +1,30 @@
 'use strict';
 
+const table = process.env.USERS_DB_NAME.replace(/{stage}/, process.env.STAGE);
+const config = { region: process.env.SERVERLESS_REGION };
+
 // Common
 const AWS = require('aws-sdk');
-// const config = { region: process.env.SERVERLESS_REGION };
-// const dynamodb = new AWS.DynamoDB.DocumentClient(config);
+const dynamodb = new AWS.DynamoDB.DocumentClient(config);
 const Promise = require('bluebird');
 const cognitoidentity = new AWS.CognitoIdentity({ region: process.env.COGNITO_REGION });
 
 const saveDatabase = (profile) => new Promise((resolve, reject) => {
   if (profile) {
-    resolve(null);
+    // resolve(null);
+
+    const params = {
+      TableName: table,
+      Item: profile
+    };
+
+    dynamodb.put(params, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
   } else {
     reject('Invalid profile');
   }

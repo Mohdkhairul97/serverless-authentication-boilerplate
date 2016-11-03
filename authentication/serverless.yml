@@ -3,7 +3,7 @@ service: serverless-authentication # change this
 provider:
   name: aws
   stage: dev
-  region: us-west-2
+  region: us-east-1
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -65,7 +65,7 @@ functions:
 
 resources:
   Resources:
-    Dynamo:
+    CacheDynamoDbTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -82,3 +82,32 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.stage}-serverless-authentication-cache
+
+    UsersDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: userName
+          AttributeType: S
+        - AttributeName: provider
+          AttributeType: S
+        KeySchema:
+        - AttributeName: userName
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+        LocalSecondaryIndexes:
+        - IndexName: ProviderIndex
+          KeySchema:
+          - AttributeName: userName
+            KeyType: HASH
+          - AttributeName: provider
+            KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.stage}-serverless-authentication-users

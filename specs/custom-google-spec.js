@@ -57,9 +57,9 @@ describe('Authentication Provider', () => {
         expect(data.statusCode).to.equal(302);
         const query = url.parse(data.headers.Location, true).query;
         state = query.state;
-        expect(data.headers.Location).to.match(/https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?client_id=cg-mock-id&redirect_uri=https:\/\/api-id\.execute-api\.eu-west-1\.amazonaws\.com\/dev\/authentication\/callback\/custom-google&response_type=code&scope=profile email&state=.{64}/);
+        expect(data.headers.Location).to.match(/https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?client_id=cg-mock-id&redirect_uri=https:\/\/api-id\.execute-api\.us-east-1\.amazonaws\.com\/dev\/authentication\/callback\/custom-google&response_type=code&scope=profile email&state=.{64}/);
         done(null);
-      }});
+      } });
     });
 
     it('should return local client url', (done) => {
@@ -84,7 +84,7 @@ describe('Authentication Provider', () => {
         expect(tokenData.id)
           .to.equal('46344f93c18d9b70ddef7cc5c24886451a0af124f74d84a0c89387b5f7c70ff4');
         done(null);
-      }});
+      } });
     });
 
     it('should get new authorization token', (done) => {

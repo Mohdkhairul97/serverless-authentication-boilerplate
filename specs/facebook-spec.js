@@ -57,9 +57,9 @@ describe('Authentication Provider', () => {
       signinHandler(event, { succeed: (data) => {
         const query = url.parse(data.headers.Location, true).query;
         state = query.state;
-        expect(data.headers.Location).to.match(/https:\/\/www\.facebook\.com\/dialog\/oauth\?client_id=fb-mock-id&redirect_uri=https:\/\/api-id\.execute-api\.eu-west-1\.amazonaws\.com\/dev\/authentication\/callback\/facebook&scope=email&state=.{64}/);
+        expect(data.headers.Location).to.match(/https:\/\/www\.facebook\.com\/dialog\/oauth\?client_id=fb-mock-id&redirect_uri=https:\/\/api-id\.execute-api\.us-east-1\.amazonaws\.com\/dev\/authentication\/callback\/facebook&scope=email&state=.{64}/);
         done(null);
-      }});
+      } });
     });
 
     it('should return local client url', (done) => {
@@ -83,7 +83,7 @@ describe('Authentication Provider', () => {
         expect(tokenData.id)
           .to.equal('ddc94e8ba6752df42ddad3af5336670f2039c1c673d9bdec4bac56acc89b459b');
         done(null);
-      }});
+      } });
     });
 
     it('should get new authorization token', (done) => {

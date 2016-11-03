@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "bluebird": "^3.4.0",
-    "decamelize": "^1.2.0",
     "dotenv": "^2.0.0",
+    "request": "^2.76.0",
     "serverless-authentication": "^0.4.4",
     "serverless-authentication-facebook": "^0.3.2",
     "serverless-authentication-google": "^0.3.2",

@@ -81,12 +81,26 @@ function callbackHandler(proxyEvent, context) {
     } else {
       cache.revokeState(state)
         .then(() => {
-          const id = createUserId(`${profile.provider}-${profile.id}`, providerConfig.token_secret);
-          const data = createResponseData(id, providerConfig);
+          const uid = createUserId(`${profile.provider}-${profile.id}`,
+            providerConfig.token_secret);
+          const data = createResponseData(uid, providerConfig);
+
+          // Return the user's ID as a paramter in the callback URI.
+          // The user ID becomes part of the API path authorized, ensuring that this user cannot
+          // modify another user's data.
+          // e.g. https://<API ID>.execute-api.us-east-1.amazonaws.com/dev/items/<USER ID>/*
+          Object.assign(data, { id: uid });
+
+          // map data for db
+          Object.assign(profile, { userName: profile.name });
+          // remove DynamoDB keyword
+          Object.assign(profile, { name: null });
+          Object.assign(profile, { providerId: profile.id });
+          Object.assign(profile, { id: uid });
 
           Promise.all([
-            cache.saveRefreshToken(id),
-            users.saveUser(Object.assign(profile, { userId: id }))
+            cache.saveRefreshToken(uid),
+            users.saveUser(profile)
           ])
             .then((results) => tokenResponse(Object.assign(data, { refreshToken: results[0] })))
             .catch((_error) => errorResponse({ error: _error }));
