@@ -1,6 +1,6 @@
 # Serverless Authentication
 
-Note by Jeremy Cummins: This fork is meant to work with the `react-authenticate` branch of `https://github.com/99xt/serverless-react-boilerplate/`.
+Note by Jeremy Cummins: This fork is meant to work with the `react-authenticate` branch of https://github.com/99xt/serverless-react-boilerplate/.
 It will authorize an API endpoint that includes a user ID so that the client cannot modify a different user's data by replacing the user ID in the request. See **redirectProxyCallback** method in **authentication/lib/helpers.js**.
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
