@@ -17,7 +17,7 @@ If you are using Serverless framework v.0.5, see branch https://github.com/laard
 
 Installation will create one DynamoDB table for OAuth state and refresh tokens.
 
-1. Clone or download the repository `https://github.com/jcummins54/serverless-authentication-boilerplate/`.
+1. Clone or download the repository https://github.com/jcummins54/serverless-authentication-boilerplate/.
 2. Switch to the branch `git checkout -b react-authenticate` and get the latest `git pull origin react-authenticate`.
 3. Rename _example.env_ in _authentication_ to _.env_ and set [environmental variables](#env-vars).
 4. Change directory to `authentication` and run `npm install`.
