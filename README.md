@@ -1,6 +1,6 @@
 # Serverless Authentication
 
-Note by Jeremy Cummins: This fork is meant to work with https://github.com/jcummins54/serverless-react-boilerplate.
+Note by Jeremy Cummins: This fork is meant to work with the `react-authenticate` branch of `https://github.com/99xt/serverless-react-boilerplate/`.
 It will authorize an API endpoint that includes a user ID so that the client cannot modify a different user's data by replacing the user ID in the request. See **redirectProxyCallback** method in **authentication/lib/helpers.js**.
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
@@ -17,11 +17,12 @@ If you are using Serverless framework v.0.5, see branch https://github.com/laard
 
 Installation will create one DynamoDB table for OAuth state and refresh tokens.
 
-1. Run `serverless install --url https://github.com/laardee/serverless-authentication-boilerplate`, clone or download the repository
-2. Rename _example.env_ in _authentication_ to _.env_ and set [environmental variables](#env-vars).
-3. Change directory to `authentication` and run `npm install`.
-4. Run `serverless deploy` on the authentication folder to deploy authentication service to AWS. Notice the arn of the authorize function.
-5. (optional) Change directory to test-token and insert the arn of the authorizer function to authorizer/arn in serverless.yml. Then run `serverless deploy` to deploy test-token service.
+1. Clone or download the repository `https://github.com/jcummins54/serverless-authentication-boilerplate/`.
+2. Switch to the branch `git checkout -b react-authenticate` and get the latest `git pull origin react-authenticate`.
+3. Rename _example.env_ in _authentication_ to _.env_ and set [environmental variables](#env-vars).
+4. Change directory to `authentication` and run `npm install`.
+5. Run `serverless deploy` on the authentication folder to deploy authentication service to AWS. Notice the arn of the authorize function.
+6. (optional) Change directory to test-token and insert the arn of the authorizer function to authorizer/arn in serverless.yml. Then run `serverless deploy` to deploy test-token service.
 
 If you wish to change the cache db name, change `CACHE_DB_NAME ` in _.env_ file and `TableName` in _serverless.yml_ in Dynamo resource.
 
