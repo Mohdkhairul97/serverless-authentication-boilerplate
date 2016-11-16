@@ -1,8 +1,11 @@
 service: serverless-authentication # change this
 
+custom:
+  writeEnvVars: ${file(./env.yml)}
+
 provider:
   name: aws
-  stage: dev
+  stage: ${self:custom.writeEnvVars.STAGE}
   region: us-east-1
   iamRoleStatements:
     - Effect: Allow
@@ -22,6 +25,10 @@ provider:
 package:
   exclude:
     - .git/**
+    - env.*
+
+plugins:
+  - serverless-plugin-write-env-vars
 
 # Functions
 
