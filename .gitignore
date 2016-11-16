@@ -39,9 +39,9 @@ node_modules
 .tmp
 
 #SERVERLESS
-admin.env
 .env
-.env.**
+env.yml
+env.*.yml
 
 #Ignore _meta folder
 _meta

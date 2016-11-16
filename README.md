@@ -18,12 +18,12 @@ If you are using Serverless framework v.0.5, see branch https://github.com/laard
 Installation will create one DynamoDB table for OAuth state and refresh tokens.
 
 1. Run `serverless install --url https://github.com/laardee/serverless-authentication-boilerplate`, clone or download the repository
-2. Rename _example.env_ in _authentication_ to _.env_ and set [environmental variables](#env-vars).
+2. Copy _example-env.yml_ in _authentication_ to _env.yml_ and set [environmental variables](#env-vars).
 3. Change directory to `authentication` and run `npm install`.
 4. Run `serverless deploy` on the authentication folder to deploy authentication service to AWS. Notice the arn of the authorize function.
 5. (optional) Change directory to test-token and insert the arn of the authorizer function to authorizer/arn in serverless.yml. Then run `serverless deploy` to deploy test-token service.
 
-If you wish to change the cache db name, change `CACHE_DB_NAME ` in _.env_ file and `TableName` in _serverless.yml_ in Dynamo resource.
+If you wish to change the cache db name, change `CACHE_DB_NAME ` in _env.yml_ file and `TableName` in _serverless.yml_ in Dynamo resource.
 
 ## Set up Authentication Provider Application Settings
 
@@ -64,24 +64,26 @@ Functions:
 
 ## <a id="env-vars"></a>Environmental Variables
 
-Open authentication/.env, fill in what you use and other ones can be deleted.
+Open authentication/env.yml, fill in what you use and other ones can be deleted.
 
 ```
-STAGE = dev
-REDIRECT_CLIENT_URI = http://url-to-frontend-webapp/
-TOKEN_SECRET = secret-for-json-web-token
-PROVIDER_FACEBOOK_ID = facebook-app-id
-PROVIDER_FACEBOOK_SECRET = facebook-app-secret
-PROVIDER_GOOGLE_ID = google-app-id
-PROVIDER_GOOGLE_SECRET = google-app-secret
-PROVIDER_MICROSOFT_ID = microsoft-app-id
-PROVIDER_MICROSOFT_SECRET = microsoft-app-secret
-PROVIDER_CUSTOM_GOOGLE_ID = google-app-id
-PROVIDER_CUSTOM_GOOGLE_SECRET = google-app-secret
-COGNITO_IDENTITY_POOL_ID = cognito-pool-id
-COGNITO_REGION = eu-west-1
-COGNITO_PROVIDER_NAME = your-service-name
-
+STAGE: dev
+CACHE_DB_NAME: ${self:custom.writeEnvVars.STAGE}-serverless-authentication-cache
+USERS_DB_NAME: ${self:custom.writeEnvVars.STAGE}-serverless-authentication-users
+COGNITO_IDENTITY_POOL_ID: cognito-pool-id
+COGNITO_REGION: us-east-1
+COGNITO_PROVIDER_NAME: your-service-name
+REDIRECT_CLIENT_URI: http://url-to-frontend-webapp/
+API_AUTH_ENDPOINT: https://API-ID.execute-api.us-east-1.amazonaws.com/${self:custom.writeEnvVars.STAGE}/items/{userId}/register
+TOKEN_SECRET: secret-for-json-web-token
+PROVIDER_FACEBOOK_ID: fb-mock-id
+PROVIDER_FACEBOOK_SECRET: fb-mock-secret
+PROVIDER_GOOGLE_ID: g-mock-id
+PROVIDER_GOOGLE_SECRET: g-mock-secret
+PROVIDER_MICROSOFT_ID: ms-mock-id
+PROVIDER_MICROSOFT_SECRET: ms-mock-secret
+PROVIDER_CUSTOM_GOOGLE_ID: cg-mock-id
+PROVIDER_CUSTOM_GOOGLE_SECRET: cg-mock-secret
 ```
 
 ## Example Provider Packages
