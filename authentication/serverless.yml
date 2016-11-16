@@ -19,6 +19,10 @@ provider:
       Resource: arn:aws:cognito-identity:*:*:*
   runtime: nodejs4.3
 
+package:
+  exclude:
+    - .git/**
+
 # Functions
 
 functions:
