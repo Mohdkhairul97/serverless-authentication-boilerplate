@@ -9,6 +9,7 @@
     "serverless-authentication": "^0.4.4",
     "serverless-authentication-facebook": "^0.3.2",
     "serverless-authentication-google": "^0.3.2",
-    "serverless-authentication-microsoft": "^0.3.2"
+    "serverless-authentication-microsoft": "^0.3.2",
+    "serverless-plugin-write-env-vars": "^1.0.1"
   }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-const table = process.env.CACHE_DB_NAME.replace(/{stage}/, process.env.STAGE);
+const table = process.env.CACHE_DB_NAME;
 const config = { region: process.env.SERVERLESS_REGION };
 
 if (process.env.LOCAL_DDB_ENDPOINT) config.endpoint = process.env.LOCAL_DDB_ENDPOINT;

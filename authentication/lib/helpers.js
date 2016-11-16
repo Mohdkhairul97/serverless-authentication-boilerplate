@@ -33,9 +33,7 @@ const redirectProxyCallback = (context, data) => {
   // Authorize before returning auth token to ensure client cannot authorize a different user ID.
   // The user ID becomes part of the API path authorized, ensuring that this user cannot
   // modify another user's data.
-  const authUrl = process.env.API_AUTH_ENDPOINT
-    .replace(/{stage}/, process.env.STAGE)
-    .replace(/{userId}/, query.id);
+  const authUrl = process.env.API_AUTH_ENDPOINT.replace(/{userId}/, query.id);
   const request = require('request');
   const options = {
     url: authUrl,

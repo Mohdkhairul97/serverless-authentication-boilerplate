@@ -1,6 +1,6 @@
 'use strict';
 
-const table = process.env.USERS_DB_NAME.replace(/{stage}/, process.env.STAGE);
+const table = process.env.USERS_DB_NAME;
 const config = { region: process.env.SERVERLESS_REGION };
 
 // Common
