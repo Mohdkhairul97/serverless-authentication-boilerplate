@@ -88,7 +88,7 @@ function callbackHandler(proxyEvent, context) {
           // Return the user's ID as a paramter in the callback URI.
           // The user ID becomes part of the API path authorized, ensuring that this user cannot
           // modify another user's data.
-          // e.g. https://<API ID>.execute-api.us-east-1.amazonaws.com/dev/*/items/<USER ID>/*
+          // e.g. https://<API ID>.execute-api.us-east-1.amazonaws.com/dev/*/todos/<USER ID>/*
           Object.assign(data, { id: uid });
 
           // map data for db

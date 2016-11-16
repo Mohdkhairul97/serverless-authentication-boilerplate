@@ -75,7 +75,7 @@ COGNITO_IDENTITY_POOL_ID: cognito-pool-id
 COGNITO_REGION: us-east-1
 COGNITO_PROVIDER_NAME: your-service-name
 REDIRECT_CLIENT_URI: http://url-to-frontend-webapp/
-API_AUTH_ENDPOINT: https://API-ID.execute-api.us-east-1.amazonaws.com/${self:custom.writeEnvVars.STAGE}/items/{userId}/register
+API_AUTH_ENDPOINT: https://API-ID.execute-api.us-east-1.amazonaws.com/${self:custom.writeEnvVars.STAGE}/todos/{userId}/register
 TOKEN_SECRET: secret-for-json-web-token
 PROVIDER_FACEBOOK_ID: fb-mock-id
 PROVIDER_FACEBOOK_SECRET: fb-mock-secret
