@@ -1,12 +1,12 @@
-service: serverless-authentication # change this
-
 custom:
   writeEnvVars: ${file(./env.yml)}
+
+service: ${self:custom.writeEnvVars.SERVICE_NAME}
 
 provider:
   name: aws
   stage: ${self:custom.writeEnvVars.STAGE}
-  region: us-east-1
+  region: ${self:custom.writeEnvVars.REGION}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -92,7 +92,7 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:provider.stage}-serverless-authentication-cache
+        TableName: ${self:custom.writeEnvVars.CACHE_DB_NAME}
 
     UsersDynamoDbTable:
       Type: AWS::DynamoDB::Table
@@ -121,4 +121,4 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:provider.stage}-serverless-authentication-users
+        TableName: ${self:custom.writeEnvVars.USERS_DB_NAME}

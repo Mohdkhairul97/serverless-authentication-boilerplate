@@ -13,7 +13,8 @@ describe('Authentication', () => {
 
       signinHandler(event, { succeed: (data) => {
         expect(data.statusCode).to.equal(302);
-        expect(data.headers.Location).to.equal('http://127.0.0.1:3000/?error=Invalid provider: invalid');
+        expect(data.headers.Location)
+          .to.equal(`${process.env.REDIRECT_CLIENT_URI}?error=Invalid provider: invalid`);
         done(null);
       } });
     });

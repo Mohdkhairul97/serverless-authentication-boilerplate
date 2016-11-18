@@ -1,7 +1,7 @@
 'use strict';
 
 const table = process.env.USERS_DB_NAME;
-const config = { region: process.env.SERVERLESS_REGION };
+const config = { region: process.env.REGION };
 
 // Common
 const AWS = require('aws-sdk');

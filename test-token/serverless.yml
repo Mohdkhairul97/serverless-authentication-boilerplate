@@ -1,9 +1,12 @@
+custom:
+  writeEnvVars: ${file(../authentication/env.yml)}
+
 service: serverless-authentication-test-token # NOTE: update this with your service name
 
 provider:
   name: aws
-  stage: dev
-  region: us-east-1
+  stage: ${self:custom.writeEnvVars.STAGE}
+  region: ${self:custom.writeEnvVars.REGION}
   runtime: nodejs4.3
 
 functions:
@@ -16,7 +19,7 @@ functions:
           cors: true
           integration: lambda
           authorizer:
-            arn: arn:aws:lambda:us-east-1:AWS-ACCOUNT-ID:function:serverless-authentication-${self:provider.stage}-authorize
+            arn: arn:aws:lambda:${self:provider.region}:${self:custom.writeEnvVars.AWS_ACCOUNT_ID}:function:${self:custom.writeEnvVars.SERVICE_NAME}-${self:provider.stage}-authorize
             resultTtlInSeconds: 0
             identitySource: method.request.header.Authorization
             identityValidationExpression: .*

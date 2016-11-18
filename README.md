@@ -19,10 +19,9 @@ Installation will create one DynamoDB table for OAuth state and refresh tokens.
 
 1. Clone or download the repository https://github.com/jcummins54/serverless-authentication-boilerplate/.
 2. Switch to the branch `git checkout -b react-authenticate` and get the latest `git pull origin react-authenticate`.
-3. Copy _example-env.yml_ in _authentication_ to _env.yml_ and set [environmental variables](#env-vars).
+3. In the _authentication_ folder, copy _example-env.yml_ to _env.yml_ and set [environmental variables](#env-vars).
 4. Change directory to `authentication` and run `npm install`.
-5. Run `serverless deploy` on the authentication folder to deploy authentication service to AWS. Notice the arn of the authorize function.
-6. (optional) Change directory to test-token and insert the arn of the authorizer function to authorizer/arn in serverless.yml. Then run `serverless deploy` to deploy test-token service.
+5. Run `serverless deploy` on the authentication folder to deploy authentication service to AWS. Notice the arn of the authorize function, this will be used in the React client.
 
 If you wish to change the cache db name, change `CACHE_DB_NAME ` in _env.yml_ file and `TableName` in _serverless.yml_ in Dynamo resource.
 
@@ -65,18 +64,37 @@ Functions:
 
 ## <a id="env-vars"></a>Environmental Variables
 
-Open authentication/env.yml, fill in what you use and other ones can be deleted.
+Open authentication/env.yml and fill in your details.
 
 ```
+SERVICE_NAME: serverless-authentication
+
 STAGE: dev
+
+# local db for running tests - check the IP of your Docker container created by specs-docker.sh
+LOCAL_DDB_ENDPOINT: http://localhost:8000/
+
+# database table names
 CACHE_DB_NAME: ${self:custom.writeEnvVars.STAGE}-serverless-authentication-cache
 USERS_DB_NAME: ${self:custom.writeEnvVars.STAGE}-serverless-authentication-users
+
+# AWS info
+REGION: us-east-1
+AWS_ACCOUNT_ID: aws-account-id
 COGNITO_IDENTITY_POOL_ID: cognito-pool-id
 COGNITO_REGION: us-east-1
-COGNITO_PROVIDER_NAME: your-service-name
-REDIRECT_CLIENT_URI: http://url-to-frontend-webapp/
+COGNITO_PROVIDER_NAME: serverless-authentication-boilerplate
+
+# Your application's client URI
+REDIRECT_CLIENT_URI: http://localhost:8080/
+
+# The API endpoint to be authorized, such as the test-token API endpoint
 API_AUTH_ENDPOINT: https://API-ID.execute-api.us-east-1.amazonaws.com/${self:custom.writeEnvVars.STAGE}/todos/{userId}/register
-TOKEN_SECRET: secret-for-json-web-token
+
+# Change this
+TOKEN_SECRET: token-secret-123
+
+# Providers you aren't using can be deleted
 PROVIDER_FACEBOOK_ID: fb-mock-id
 PROVIDER_FACEBOOK_SECRET: fb-mock-secret
 PROVIDER_GOOGLE_ID: g-mock-id
@@ -103,3 +121,4 @@ Package contains example [/authentication/lib/custom-google.js](https://github.c
 * Install Docker and Docker Compose
 * Run `npm install` in project root directory 
 * Run ./specs-docker.sh
+* If the Setup specs test fails starting DynamoDB, check the IP of the created Docker container and make sure the value of `LOCAL_DDB_ENDPOINT` in _authentication/env.yml_ matches.
